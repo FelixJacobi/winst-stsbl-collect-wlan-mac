@@ -1,0 +1,17 @@
+[Product]
+type: localboot
+id: stsbl-collect-wlan-mac
+name: WLAN-MAC-Adresse erfassen
+description: Erfasst die WLAN-MAC-Adresse und erstellt einen neuen Geräte-Eintrag für diese in der Geräteverwaltung.
+advice: Die Eigenschaft Rechnername muss gesetzt werden, damit das Gerät ordnungsgemäß eingetragen werden kann.
+version: 1.0
+packageVersion: 1.0
+setupScript: install.ins
+uninstallScript: remove.ins
+
+[ProductProperty]
+name: hostname
+description: Name des Eintrages für die WLAN-MAC-Adresse
+default: {{ PCName }}-Wlan
+pattern: {{ PCName }}-Wlan
+helptext: Legt den Namen des Eintrages fest, unter dem der Eintrag für die WLAN-MAC-Adresse in der Geräteverwaltung erstellt wird. Der Platzhalter "{{ PCName }}" wird hierbei durch den Namen des Rechners, der bei Windows eingetragen ist, ersetzt.

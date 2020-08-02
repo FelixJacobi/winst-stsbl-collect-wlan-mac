@@ -1,0 +1,64 @@
+[Initial]
+Message=Erfasse WLAN-MAC-Adresse...
+DefStringList $PowershellResult$
+DefStringList $Result$
+DefVar $Hostname$
+DefVar $MAC$
+DefVar $Status$
+
+[Actions]
+ShowBitmap "%ScriptPath%\logo.png" "WLAN-MAC-Adresse"
+Sub_BuildHostname
+Sub_MAC
+
+[Sub_BuildHostname]
+Set $Hostname$ = GetProductProperty("hostname", "")
+
+if ($Hostname$ = "")
+  LogError "No Hostname set"
+  IsFatalError
+endif
+
+Set $Hostname$ = StringReplace($Hostname$ "{{ PCName }}", "%PCName%")
+
+[Sub_MAC]
+Set $PowershellResult$ = PowershellCall('Write-Output $(Get-NetAdapter -Physical -Name WiFi* | Select-Object -Property MacAddress -First 1).MacAddress')
+
+; Support Windows 7 with different interface names
+if (Count($PowershellResult$) = "0")
+  Set $PowershellResult$ = PowershellCall('Write-Output $(Get-NetAdapter -Physical -Name WLAN* | Select-Object -Property MacAddress -First 1).MacAddress')
+endif
+
+if (Count($PowershellResult$) > "0")
+  Set $MAC$ = TakeString("0", $PowershellResult$)
+  if ($MAC$ = "")
+    LogWarning "No WLAN MAC address found."
+  else
+    Sub_SendMAC
+  endif
+else
+  LogWarning "No WLAN MAC address found."
+endif
+
+[Sub_SendMAC]
+Set $Result$ = GetReturnListFromSection("opsiservicecall_SendMAC")
+Set $Status$ = TakeString("0", $Result$)
+
+if ($Status$ = "added")
+  LogWarning "New entry in host management for found MAC address was added."
+else
+  if ($Status$ = "noop")
+    LogWarning "No new entry in host management for found MAC address was added as MAC address is already in host management."
+  else
+    if ($Status$ = "error")
+      LogError "No new entry in host management for found MAC address was added, an error occured. Please see web interface log on server for more information."
+      IsFatalError
+    else
+      LogError "Unexpected response from backend: " + $Status$
+      IsFatalError
+    endif
+endif
+
+[opsiservicecall_SendMAC]
+"method":"collect_wlan_mac_track"
+"params":["$MAC$", "$Hostname$"]

@@ -1,0 +1,13 @@
+Source: winst-stsbl-collect-wlan-mac
+Section: misc
+Priority: optional
+Maintainer: IServ <info@iserv.eu>
+Build-Depends: debhelper (>= 10)
+Standards-Version: 4.5.0
+
+Package: winst-stsbl-collect-wlan-mac
+Architecture: all
+Xb-Private-Iserv-Revision: ${iserv:Revision}
+Depends: ${iserv:winst:Depends}
+Description: ${iserv:winst:Description}
+Tag: suite::iserv:deploy, role::package
