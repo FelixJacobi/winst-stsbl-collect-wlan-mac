@@ -19,7 +19,7 @@ if ($Hostname$ = "")
   IsFatalError
 endif
 
-Set $Hostname$ = StringReplace($Hostname$ "{{ PCName }}", "%PCName%")
+Set $Hostname$ = StringReplace($Hostname$, "{{ PCName }}", "%PCName%")
 
 [Sub_MAC]
 Set $PowershellResult$ = PowershellCall('Write-Output $(Get-NetAdapter -Physical -Name WiFi* | Select-Object -Property MacAddress -First 1).MacAddress')
@@ -50,7 +50,7 @@ else
   if ($Status$ = "noop")
     LogWarning "No new entry in host management for found MAC address was added as MAC address is already in host management."
   else
-    if ($Status$ = "error")
+    if ($Status$ = "fail")
       LogError "No new entry in host management for found MAC address was added, an error occured. Please see web interface log on server for more information."
       IsFatalError
     else
@@ -61,4 +61,7 @@ endif
 
 [opsiservicecall_SendMAC]
 "method":"collect_wlan_mac_track"
-"params":["$MAC$", "$Hostname$"]
+"params":[
+  "$MAC$",
+  "$Hostname$"
+]
