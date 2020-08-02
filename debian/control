@@ -1,7 +1,7 @@
 Source: winst-stsbl-collect-wlan-mac
 Section: misc
 Priority: optional
-Maintainer: IServ <info@iserv.eu>
+Maintainer: Stadtteilschule Blankenese <repository@stsbl.de>
 Build-Depends: debhelper (>= 10)
 Standards-Version: 4.5.0
 
