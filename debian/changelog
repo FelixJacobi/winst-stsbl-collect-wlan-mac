@@ -1,3 +1,9 @@
+winst-stsbl-collect-wlan-mac (1.0-1.1) experimental; urgency=medium
+
+  * Improved advice and helptext
+
+ -- Felix Jacobi <Felix@jacobi-hamburg.net>  Tue, 04 Aug 2020 23:23:47 +0200
+
 winst-stsbl-collect-wlan-mac (1.0-1.0) experimental; urgency=medium
 
   * Initial release
