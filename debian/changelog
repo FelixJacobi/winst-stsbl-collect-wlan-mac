@@ -1,3 +1,9 @@
+winst-stsbl-collect-wlan-mac (1.0-1.2) experimental; urgency=medium
+
+  * Fixed missing endif statement
+
+ -- Felix Jacobi <Felix@jacobi-hamburg.net>  Sun, 09 Aug 2020 14:56:10 +0200
+
 winst-stsbl-collect-wlan-mac (1.0-1.1) experimental; urgency=medium
 
   * Improved advice and helptext
