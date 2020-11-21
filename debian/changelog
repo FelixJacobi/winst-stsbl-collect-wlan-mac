@@ -1,3 +1,14 @@
+winst-stsbl-collect-wlan-mac (1.0-1.3) experimental; urgency=medium
+
+  * Added support to replace MAC address
+
+  iserv: Das Paket kann nun wahlweise statt der Erzeugung eines zusätzlichen
+    Eintrages für die WLAN-MAC-Adresse auch diese beim aktuellen Gerät direkt
+    eintragen. Dies ist für Fälle sinnvoll, wo zum Beispiel viele Tablets
+    einmalig nacheinander mit demselben USB-Ethernet-Adapter installiert werden.
+
+ -- Felix Jacobi <Felix@jacobi-hamburg.net>  Sat, 21 Nov 2020 04:14:37 +0100
+
 winst-stsbl-collect-wlan-mac (1.0-1.2) experimental; urgency=medium
 
   * Fixed missing endif statement
