@@ -8,8 +8,15 @@ DefVar $Status$
 
 [Actions]
 ShowBitmap "%ScriptPath%\logo.png" "WLAN-MAC-Adresse"
-Sub_BuildHostname
-Sub_MAC
+Sub_Setup
+
+[Sub_Setup]
+if (GetProductProperty("replace-mac", "False") = "True")
+  Sub_ReplaceMAC
+else
+  Sub_BuildHostname
+  Sub_AddWlanMAC
+endif
 
 [Sub_BuildHostname]
 Set $Hostname$ = GetProductProperty("hostname", "")
@@ -21,7 +28,19 @@ endif
 
 Set $Hostname$ = StringReplace($Hostname$, "{{ PCName }}", "%PCName%")
 
-[Sub_MAC]
+[Sub_AddWlanMAC]
+Sub_GetMAC
+if not($Mac$ = "")
+  Sub_SendMAC
+endif
+
+[Sub_ReplaceMAC]
+Sub_GetMAC
+if not($Mac$ = "")
+  Sub_IndividualiseMAC
+endif
+
+[Sub_GetMAC]
 Set $PowershellResult$ = PowershellCall('Write-Output $(Get-NetAdapter -Physical -Name WiFi* | Select-Object -Property MacAddress -First 1).MacAddress')
 
 ; Support Windows 7 with different interface names
@@ -33,8 +52,6 @@ if (Count($PowershellResult$) > "0")
   Set $MAC$ = TakeString("0", $PowershellResult$)
   if ($MAC$ = "")
     LogWarning "No WLAN MAC address found."
-  else
-    Sub_SendMAC
   endif
 else
   LogWarning "No WLAN MAC address found."
@@ -42,6 +59,13 @@ endif
 
 [Sub_SendMAC]
 Set $Result$ = GetReturnListFromSection("opsiservicecall_SendMAC")
+Sub_HandleStatus
+
+[Sub_IndividualiseMAC]
+Set $Result$ = GetReturnListFromSection("opsiservicecall_IndividualiseMAC")
+Sub_HandleStatus
+
+[Sub_HandleStatus]
 Set $Status$ = TakeString("0", $Result$)
 
 if ($Status$ = "added")
@@ -65,4 +89,10 @@ endif
 "params":[
   "$MAC$",
   "$Hostname$"
+]
+
+[opsiservicecall_IndividualiseMAC]
+"method":"collect_wlan_mac_individualise"
+"params":[
+  "$MAC$"
 ]

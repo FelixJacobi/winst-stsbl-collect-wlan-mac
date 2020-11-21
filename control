@@ -3,11 +3,18 @@ type: localboot
 id: stsbl-collect-wlan-mac
 name: WLAN-MAC-Adresse erfassen
 description: Erfasst die WLAN-MAC-Adresse und erstellt einen neuen Geräte-Eintrag für diese in der Geräteverwaltung.
-advice: Die Eigenschaft "Name des Eintrages für die WLAN-MAC-Adresse" muss gesetzt werden, damit das Gerät ordnungsgemäß eingetragen werden kann.
+advice: Die Eigenschaft "Name des Eintrages für die WLAN-MAC-Adresse" muss gesetzt werden, damit das Gerät ordnungsgemäß eingetragen werden kann, sofern ein zusätzlicher Eintrag für die WLAN-Schnittstelle erzeugt werden soll.
 version: 1.0
 packageVersion: 1.2
 setupScript: install.ins
 uninstallScript: remove.ins
+
+[ProductProeprty]
+name: replace-mac
+type: bool
+description: MAC-Adresse stattdessen durch WLAN-MAC-Addresse ersetzen?
+default: false
+helptext: Standardmäßig erzeugt das Paket einen neuen Eintrag in der Geräteverwaltung für die WLAN-Mac-Adresse. Es kann aber stattdessen sinnvoll sein, die WLAN-MAC-Adresse als aktuelle MAC-Adresse für das Gerät einzutragen, wenn zum Beispiel Tablets per gemeinsam genutztem USB-LAN-Adapter installiert wurden.
 
 [ProductProperty]
 name: hostname

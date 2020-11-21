@@ -9,6 +9,6 @@ Package: winst-stsbl-collect-wlan-mac
 Architecture: all
 Xb-Private-Iserv-Revision: ${iserv:Revision}
 Depends: ${iserv:winst:Depends},
-  stsbl-iserv-collect-wlan-mac,
+  stsbl-iserv-collect-wlan-mac (>= 20.11.21-1),
 Description: ${iserv:winst:Description}
 Tag: suite::iserv, suite::iserv:deploy
