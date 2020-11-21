@@ -5,11 +5,11 @@ name: WLAN-MAC-Adresse erfassen
 description: Erfasst die WLAN-MAC-Adresse und erstellt einen neuen Geräte-Eintrag für diese in der Geräteverwaltung.
 advice: Die Eigenschaft "Name des Eintrages für die WLAN-MAC-Adresse" muss gesetzt werden, damit das Gerät ordnungsgemäß eingetragen werden kann, sofern ein zusätzlicher Eintrag für die WLAN-Schnittstelle erzeugt werden soll.
 version: 1.0
-packageVersion: 1.3
+packageVersion: 1.4
 setupScript: install.ins
 uninstallScript: remove.ins
 
-[ProductProeprty]
+[ProductProperty]
 name: replace-mac
 type: bool
 description: MAC-Adresse stattdessen durch WLAN-MAC-Addresse ersetzen?
